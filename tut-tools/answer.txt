@@ -1,0 +1,12 @@
+Answer for Q1:
+    ps -e --sort cmd
+Answer for Q2:
+    grep '^a' /usr/share/words | wc -l
+Answer for Q3:
+    ls -l /etc | grep '\.conf$' | sort -nk 5 | head -n 5
+Answer for Q4: 
+    vim echo.sh 
+    echo "hello world!"
+    :wq!
+    chmod +x echo.sh
+    ./echo.sh

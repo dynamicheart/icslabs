@@ -1,0 +1,66 @@
+# Student ID:515030910223
+# Name:Jianbang Yang
+
+# Program copy.ys
+# Execution begins at address 0
+
+init:
+    irmovl Stack,%esp
+    irmovl Stack,%ebp
+    jmp Main
+
+.align 4
+# Source block
+src:
+    .long 0x00a
+    .long 0x0b0
+    .long 0xc00
+
+# Destination block
+dest:
+    .long 0x111
+    .long 0x222
+    .long 0x333
+
+Main:
+    irmovl $0x3,%eax
+    pushl %eax
+    irmovl dest,%eax
+    pushl %eax
+    irmovl src,%eax
+    pushl %eax
+    call Copy
+    halt
+
+Copy:
+    pushl %ebp
+    pushl %esi
+    pushl %edi
+    pushl %ebx
+    rrmovl %esp,%ebp
+    mrmovl 0x1c(%ebp),%ecx
+    mrmovl 0x18(%ebp),%esi
+    mrmovl 0x14(%ebp),%edi   
+    irmovl $0x0,%eax
+    irmovl $0x1,%edx
+Loop:    
+    andl %ecx,%ecx
+    je End
+    mrmovl (%edi),%ebx
+    rmmovl %ebx,(%esi)
+    xorl %ebx,%eax
+    irmovl $0x4,%ebx
+    addl %ebx,%edi
+    addl %ebx,%esi
+    subl %edx,%ecx
+    jmp Loop
+End:
+    rrmovl %ebp,%esp
+    popl %ebx
+    popl %edi
+    popl %esi
+    popl %ebp
+    ret
+
+.pos 0x200
+Stack:

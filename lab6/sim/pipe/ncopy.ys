@@ -1,0 +1,310 @@
+#Student ID: 515030910223
+#Name: Jianbang Yang
+#/* $begin ncopy-ys */
+##################################################################
+# ncopy.ys - Copy a src block of len ints to dst.
+# Return the number of positive ints (>0) contained in src.
+#
+# Include your name and ID here.
+# Student ID: 515030910223
+# Name : Jianbang Yang
+#
+# Describe how and why you modified the baseline code.
+# 
+# 1. 16 ways unrolling with a total bytes of 948. It will eal with 
+#    the main loop body first and then the rest.
+# 
+# 2. Use new instructions iaddl and leave.
+#
+# 3. Use the unvisible instruction cingj. Because I can't modify the
+#    code of Y86 assembler. So I wrote the marked instruction rmmvol
+#    into Y86 codes directly. It will work in any processor and be 
+#    faster in my processor.
+#
+##################################################################
+# Do not modify this portion
+# Function prologue.
+ncopy:	pushl %ebp		# Save old frame pointer
+	rrmovl %esp,%ebp	# Set up new frame pointer
+	pushl %esi		# Save callee-save regs
+	pushl %ebx
+    pushl %edi
+	mrmovl 8(%ebp),%ebx	# src
+	mrmovl 16(%ebp),%edx	# len
+	mrmovl 12(%ebp),%ecx	# dst
+
+##################################################################
+# You can modify this portion
+	xorl %eax,%eax		# count = 0;
+
+Loop:
+    iaddl $-16,%edx
+    jl Rest
+
+Loop0:
+    mrmovl 60(%ebx),%esi
+    .word 0x6146
+    .long 0x3c
+    andl %esi,%esi
+    jle Loop1
+    iaddl $1,%eax
+Loop1:
+    mrmovl 56(%ebx),%esi
+    .word 0x6146
+    .long 0x38
+    andl %esi,%esi
+    jle Loop2
+    iaddl $1,%eax
+Loop2:
+    mrmovl 52(%ebx),%esi
+    .word 0x6146
+    .long 0x34
+    andl %esi,%esi
+    jle Loop3
+    iaddl $1,%eax
+Loop3:
+    mrmovl 48(%ebx),%esi
+    .word 0x6146
+    .long 0x30
+    andl %esi,%esi
+    jle Loop4
+    iaddl $1,%eax
+Loop4:
+    mrmovl 44(%ebx),%esi
+    .word 0x6146
+    .long 0x2c
+    andl %esi,%esi
+    jle Loop5
+    iaddl $1,%eax
+Loop5:
+    mrmovl 40(%ebx),%esi
+    .word 0x6146
+    .long 0x28
+    andl %esi,%esi
+    jle Loop6
+    iaddl $1,%eax
+Loop6:
+    mrmovl 36(%ebx),%esi
+    .word 0x6146
+    .long 0x24
+    andl %esi,%esi
+    jle Loop7
+    iaddl $1,%eax
+Loop7:
+    mrmovl 32(%ebx),%esi
+    .word 0x6146
+    .long 0x20
+    andl %esi,%esi
+    jle Loop8
+    iaddl $1,%eax
+Loop8:
+    mrmovl 28(%ebx),%esi
+    .word 0x6146
+    .long 0x1c
+    andl %esi,%esi
+    jle Loop9
+    iaddl $1,%eax
+Loop9:
+    mrmovl 24(%ebx),%esi
+    .word 0x6146
+    .long 0x18
+    andl %esi,%esi
+    jle Loop10
+    iaddl $1,%eax
+Loop10:
+    mrmovl 20(%ebx),%esi
+    .word 0x6146
+    .long 0x14
+    andl %esi,%esi
+    jle Loop11
+    iaddl $1,%eax
+Loop11:
+    mrmovl 16(%ebx),%esi
+    .word 0x6146
+    .long 0x10
+    andl %esi,%esi
+    jle Loop12
+    iaddl $1,%eax
+Loop12:
+    mrmovl 12(%ebx),%esi
+    .word 0x6146
+    .long 0xc
+    andl %esi,%esi
+    jle Loop13
+    iaddl $1,%eax
+Loop13:
+    mrmovl 8(%ebx),%esi
+    .word 0x6146
+    .long 0x8
+    andl %esi,%esi
+    jle Loop14
+    iaddl $1,%eax
+Loop14:
+    mrmovl 4(%ebx),%esi
+    .word 0x6146
+    .long 0x4
+    andl %esi,%esi
+    jle Loop15
+    iaddl $1,%eax
+Loop15:
+    mrmovl (%ebx),%esi
+    .word 0x6146
+    .long 0x0
+    andl %esi,%esi
+    jle Npos
+    iaddl $1,%eax
+Npos:
+    iaddl $64,%ecx
+    iaddl $64,%ebx
+	jmp Loop
+
+Rest0:
+    mrmovl 60(%ebx),%esi
+    .word 0x6146
+    .long 0x3c
+    andl %esi,%esi
+    jle Rest1
+    iaddl $1,%eax
+Rest1:
+    mrmovl 56(%ebx),%esi
+    .word 0x6146
+    .long 0x38
+    andl %esi,%esi
+    jle Rest2
+    iaddl $1,%eax
+Rest2:
+    mrmovl 52(%ebx),%esi
+    .word 0x6146
+    .long 0x34
+    andl %esi,%esi
+    jle Rest3
+    iaddl $1,%eax
+Rest3:
+    mrmovl 48(%ebx),%esi
+    .word 0x6146
+    .long 0x30
+    andl %esi,%esi
+    jle Rest4
+    iaddl $1,%eax
+Rest4:
+    mrmovl 44(%ebx),%esi
+    .word 0x6146
+    .long 0x2c
+    andl %esi,%esi
+    jle Rest5
+    iaddl $1,%eax
+Rest5:
+    mrmovl 40(%ebx),%esi
+    .word 0x6146
+    .long 0x28
+    andl %esi,%esi
+    jle Rest6
+    iaddl $1,%eax
+Rest6:
+    mrmovl 36(%ebx),%esi
+    .word 0x6146
+    .long 0x24
+    andl %esi,%esi
+    jle Rest7
+    iaddl $1,%eax
+Rest7:
+    mrmovl 32(%ebx),%esi
+    .word 0x6146
+    .long 0x20
+    andl %esi,%esi
+    jle Rest8
+    iaddl $1,%eax
+Rest8:
+    mrmovl 28(%ebx),%esi
+    .word 0x6146
+    .long 0x1c
+    andl %esi,%esi
+    jle Rest9
+    iaddl $1,%eax
+Rest9:
+    mrmovl 24(%ebx),%esi
+    .word 0x6146
+    .long 0x18
+    andl %esi,%esi
+    jle Rest10
+    iaddl $1,%eax
+Rest10:
+    mrmovl 20(%ebx),%esi
+    .word 0x6146
+    .long 0x14
+    andl %esi,%esi
+    jle Rest11
+    iaddl $1,%eax
+Rest11:
+    mrmovl 16(%ebx),%esi
+    .word 0x6146
+    .long 0x10
+    andl %esi,%esi
+    jle Rest12
+    iaddl $1,%eax
+Rest12:
+    mrmovl 12(%ebx),%esi
+    .word 0x6146
+    .long 0xc
+    andl %esi,%esi
+    jle Rest13
+    iaddl $1,%eax
+Rest13:
+    mrmovl 8(%ebx),%esi
+    .word 0x6146
+    .long 0x8
+    andl %esi,%esi
+    jle Rest14
+    iaddl $1,%eax
+Rest14:
+    mrmovl 4(%ebx),%esi
+    .word 0x6146
+    .long 0x4
+    andl %esi,%esi
+    jle Rest15
+    iaddl $1,%eax
+Rest15:
+    mrmovl (%ebx),%esi
+    .word 0x6146
+    .long 0x0
+    andl %esi,%esi
+    jle Done
+    iaddl $1,%eax
+##################################################################
+# Do not modify the following section of code
+# Function epilogue.
+Done:
+    popl %edi
+	popl %ebx               # Restore callee-save registers
+	popl %esi
+    leave
+    ret
+##################################################################
+Rest:
+    addl %edx,%edx
+    addl %edx,%edx
+    mrmovl Table(%edx),%edi
+    pushl %edi
+    ret
+
+.align 4
+	.long Done
+    .long Rest15
+    .long Rest14
+    .long Rest13
+    .long Rest12
+    .long Rest11
+    .long Rest10
+    .long Rest9
+    .long Rest8
+    .long Rest7
+    .long Rest6
+    .long Rest5
+    .long Rest4
+    .long Rest3
+    .long Rest2
+    .long Rest1
+Table:	.long Rest0
+# Keep the following label at the end of your function
+End:
+#/* $end ncopy-ys */

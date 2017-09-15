@@ -1,0 +1,47 @@
+# Student ID:515030910223
+# Name:Jianbang Yang
+
+# Program sum.ys
+# Execution begins at address 0
+.pos 0
+init:
+    irmovl Stack, %esp
+	irmovl Stack, %ebp
+	jmp Main
+
+# Sample linked list
+.align 4
+ele1:
+    .long 0x00a
+    .long ele2
+ele2:
+    .long 0x0b0
+    .long ele3
+ele3:
+    .long 0xc00
+    .long 0
+
+Main:
+	irmovl ele1,%eax
+	pushl %eax
+	call Sum
+	halt
+
+Sum:
+    pushl %ebp
+    rrmovl %esp,%ebp
+    irmovl $0x0,%eax
+    mrmovl 0x8(%ebp),%edx
+    jmp Condition
+Loop:
+    mrmovl (%edx),%ecx
+    addl %ecx,%eax
+    mrmovl 0x4(%edx),%edx
+Condition:
+    andl %edx,%edx
+    jne Loop
+    popl %ebp
+    ret
+
+.pos 0x100
+Stack:
